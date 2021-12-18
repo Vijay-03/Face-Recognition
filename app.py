@@ -199,7 +199,7 @@ elif add_dropbox == "Image processing":
 
     elif Filters == "Green":
         cv = '<p style = "font-family: Franklin Gothic; color: #F63366;' \
-             ' font-size: 20px;">Converting to Blue</p'
+             ' font-size: 20px;">Converting to Green</p'
         st.write(cv, unsafe_allow_html=True)
         zeros = np.zeros(image.shape[:2], dtype="uint8")
         r, g, b = cv2.split(image)
@@ -209,7 +209,7 @@ elif add_dropbox == "Image processing":
 
     elif Filters == "Red":
         cv = '<p style = "font-family: Franklin Gothic; color: #F63366;' \
-             ' font-size: 20px;">Converting to Canny Edge</p'
+             ' font-size: 20px;">Converting to Red</p'
         st.write(cv, unsafe_allow_html=True)
         zeros = np.zeros(image.shape[:2], dtype="uint8")
         r, g, b = cv2.split(image)
@@ -219,15 +219,10 @@ elif add_dropbox == "Image processing":
 
 
 elif add_dropbox == "Face Mesh":
-    # image_file_path = st.sidebar.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
-    # if image_file_path is not None:
-    #     image = np.array(Image.open(image_file_path))
     st.sidebar.image(image)
     results = model_face_mesh.process(image)
 
     for face_landmarks in results.multi_face_landmarks:
-        # mp_drawing.draw_landmarks(image, face_landmarks, connections=mp_face_mesh.FACE_CONNECTIONS,
-        #                           landmark_drawing_spec=drawing_spec, connection_drawing_spec=drawing_spec)
         mp_drawing.draw_landmarks(image, face_landmarks, mp_face_mesh.FACE_CONNECTIONS, drawing_spec)
     fm = '<p style = "font-family: Franklin Gothic; color: #F63366;' \
          ' font-size: 20px;">Face Mesh</p'
@@ -250,6 +245,7 @@ elif add_dropbox == "Face Detect":
     fd = '<p style = "font-family: Franklin Gothic; color: #F63366;' \
          ' font-size: 20px;">Detecting faces</p'
     st.write(fd, unsafe_allow_html=True)
+    st.image(img)
     
 elif add_dropbox == "Live Face Detection":
     message = '<p style = "font-family: Franklin Gothic; color: #F63366;' \
@@ -260,4 +256,3 @@ elif add_dropbox == "Live Face Detection":
 
     st.sidebar.markdown("---")
     webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
-    st.image(img)
